@@ -9,7 +9,7 @@ python code to download any manga from the website
 to run: 
 
 > python3 -m pip install -r requirements
-python3 mngascraper.py
+> python3 mngascraper.py
 
 (would advise running in a virtual env)
 
