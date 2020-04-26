@@ -12,3 +12,5 @@ to run:
 python3 mngascraper.py
 
 (would advise running in a virtual env)
+
+v1.0: downloads files as images in jpeg format
