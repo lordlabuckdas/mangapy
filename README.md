@@ -14,4 +14,8 @@ to run:
 
 (would advise running in a virtual env)
 
+### Changelog
+
+v1.5: now, fetches the manga as pdf. not backwards compatible.
+
 v1.0: downloads files as images in jpeg format
