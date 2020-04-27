@@ -2,51 +2,54 @@ from bs4 import BeautifulSoup
 import requests
 import os
 import urllib.request
+import img2pdf
 
-# made by lordlabuckdas (https://github.com/lordlabuckdas)
-
-def get_maxchap(url): # function to get the maximum number of chapters available
+def get_maxchap(url):
     req=requests.get(url,allow_redirects=False).text.encode('ascii','replace')
-    soup=BeautifulSoup(req,'html.parser')
+    soup=BeautifulSoup(req,'lxml')
     for link in soup.find_all('a'):
         if mnga_name.replace('-',' ').title() in str(link.string):
             title=link.string.split()
             return title[-1]
 
-def get_chap(i,url): # function to retrieve the chapter
-    try:
-        os.makedirs("chap"+str(i))
-    except FileExistsError:
-        pass
-    os.chdir("chap"+str(i))
+def get_chap(i,url):
     j=1
     while(1):
         ch_url=url+"/"+str(j)
         req=requests.get(ch_url,allow_redirects=False).text.encode('ascii','replace')
-        soup=BeautifulSoup(req,'html.parser')
+        soup=BeautifulSoup(req,'lxml')
         if end_chk(soup):
             for link in soup.findAll('img',{'id':'img'}):
                 get_img(link.get('src'),j)
                 j+=1
                 break
         else:
+            pdfconv(i)
             break
-    os.chdir("..")
-    
-def get_img(l,j): # function to download the image
+
+def pdfconv(i):
+    f=open(str(i)+".pdf","wb")
+    l=[k for k in os.listdir('.') if k.endswith(".jpg")]
+    l=sorted(l,key=lambda e: int(e[:-4]))
+    f.write(img2pdf.convert(l))
+    for m in l:
+        os.remove(m)
+    f.close()
+
+def get_img(l,j):
     opener = urllib.request.build_opener()
     opener.addheaders = [('User-agent', 'Mozilla/5.0')]
     urllib.request.install_opener(opener)
     urllib.request.urlretrieve(l, str(j)+".jpg")
 
-def end_chk(soup): # function to check if the page exists
+def end_chk(soup):
     for link in soup.findAll('h1'):
         if "404" in str(link.string):
             return 0
         else:
             return 1
 
-def mainn(mnga_name): # main function
+def mainn(mnga_name):
     url="http://www.mangapanda.com/"+mnga_name
     print("\nmax number of chapters is:",get_maxchap(url))
     chap_start,chap_end=input("\nenter the start and end chap num: ").split()
