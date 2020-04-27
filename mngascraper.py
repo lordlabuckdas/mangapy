@@ -6,7 +6,7 @@ import img2pdf
 
 def get_maxchap(url):
     req=requests.get(url,allow_redirects=False).text.encode('ascii','replace')
-    soup=BeautifulSoup(req,'lxml')
+    soup=BeautifulSoup(req,'html.parser')
     for link in soup.find_all('a'):
         if mnga_name.replace('-',' ').title() in str(link.string):
             title=link.string.split()
@@ -17,7 +17,7 @@ def get_chap(i,url):
     while(1):
         ch_url=url+"/"+str(j)
         req=requests.get(ch_url,allow_redirects=False).text.encode('ascii','replace')
-        soup=BeautifulSoup(req,'lxml')
+        soup=BeautifulSoup(req,'html.parser')
         if end_chk(soup):
             for link in soup.findAll('img',{'id':'img'}):
                 get_img(link.get('src'),j)
