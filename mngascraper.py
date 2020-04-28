@@ -51,8 +51,12 @@ def end_chk(soup):
 
 def mainn(mnga_name):
     url="http://www.mangapanda.com/"+mnga_name
-    print("\nmax number of chapters is:",get_maxchap(url))
+    mchap=get_maxchap(url)
+    print("\nmax number of chapters is:",mchap)
     chap_start,chap_end=input("\nenter the start and end chap num: ").split()
+    if chap_start>mchap or chap_end>mchap:
+        print("\nenter valid input next time\n")
+        return 
     print("\nalrighty, cap! firing off the mangacrawler!\n")
     for i in range(int(chap_start),int(chap_end)+1):
         get_chap(i,url+"/"+str(i))
