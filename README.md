@@ -14,7 +14,7 @@ to run:
 
 (would advise running in a virtual env)
 
-### Changelog
+### changelog
 
 v1.5: now, fetches the manga as pdf. not backwards compatible.
 
