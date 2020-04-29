@@ -8,7 +8,7 @@ def get_maxchap(url):
     req=requests.get(url,allow_redirects=False).text.encode('ascii','replace')
     soup=BeautifulSoup(req,'html.parser')
     for link in soup.find_all('a'):
-        if mnga_name.replace('-',' ').title() in str(link.string):
+        if mnga_name in str(link.string).replace(' ','-').lower():
             title=link.string.split()
             return title[-1]
 
