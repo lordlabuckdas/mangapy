@@ -52,12 +52,12 @@ def end_chk(soup):
 def mainn(mnga_name):
     url="http://www.mangapanda.com/"+mnga_name
     mchap=get_maxchap(url)
-    print("\nmax number of chapters is:",mchap)
+    print("\n[*] max number of chapters is:",mchap)
     chap_start,chap_end=input("\nenter the start and end chap num: ").split()
     if chap_start>mchap or chap_end>mchap:
-        print("\nenter valid input next time\n")
+        print("\n[*] enter valid input next time\n")
         return 
-    print("\nalrighty, cap! firing off the mangacrawler!\n")
+    print("\n[*] alrighty, cap! firing off the mangacrawler!\n")
     for i in range(int(chap_start),int(chap_end)+1):
         get_chap(i,url+"/"+str(i))
 
@@ -74,7 +74,7 @@ print("\n \
 \n \
 ")
 
-mnga_name=input("\nenter the name of the manga: ")
+mnga_name=input("[*] enter the name of the manga: ")
 mnga_name=mnga_name.lower().replace(' ','-')
 
 try:
@@ -83,6 +83,6 @@ except FileExistsError:
     pass
 
 os.chdir(os.getcwd()+"/"+mnga_name)
-print("\nsaving the manga in "+os.getcwd())
+print("\n[*] saving the manga in "+os.getcwd())
 
 mainn(mnga_name)
