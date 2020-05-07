@@ -16,8 +16,7 @@ to run:
 
 ### changelog
 
-v1.6: minor bug fix
-
-v1.5: now, fetches the manga as pdf. not backwards compatible.
-
-v1.0: downloads files as images in jpeg format
+* v2.0: menu approach, better error handling, stores latest manga releases to latest.txt
+* v1.6: minor bug fix
+* v1.5: now, fetches the manga as pdf. not backwards compatible.
+* v1.0: downloads files as images in jpeg format
