@@ -26,9 +26,10 @@ def get_maxchap(manga_name,url):
     req = requests.get(url, allow_redirects=False).text.encode('ascii', 'replace')
     soup = BeautifulSoup(req, 'html.parser')
     for link in soup.find_all('a'):
-        if manga_name in str(link.string).replace(' ','-').lower():
+        if manga_name in str(link.string).replace(' ','-').replace(':','-').replace('--','-').lower():
             title = link.string.split()
             return title[-1]
+
 
 def get_chap(i,url):
     # fetches the chapter
@@ -90,25 +91,26 @@ def mainn(manga_name):
     if mchap == None:
         print("\n [!] try a different name")
         return
+    print("\n [*] max number of chapters is:", mchap)
+    chap_start,chap_end=input("\n [*] enter the start and end chap num: ").split()
+    if chap_start>mchap or chap_end>mchap or int(chap_start) <= 0 or int(chap_end) <= 0:
+        print("\n [*] enter valid input next time")
+        return
     try:
         os.makedirs(manga_name)
     except FileExistsError:
         pass
     os.chdir(os.getcwd() + "/" + manga_name)
     print("\n [*] saving the manga in " + os.getcwd())
-    print("\n [*] max number of chapters is:", mchap)
-    chap_start,chap_end=input("\n [*] enter the start and end chap num: ").split()
-    if chap_start>mchap or chap_end>mchap or int(chap_start) <= 0 or int(chap_end) <= 0:
-        print("\n [*] enter valid input next time")
-        return
     print("\n [*] alrighty, cap! firing off the mangascraper!")
     for i in range(int(chap_start),int(chap_end) + 1):
         get_chap(i, url + "/" + str(i))
 
-disp_ascii()
 
-# this unlimited loop is probably annoying hmm
-while True:
+if __name__ == "__main__":
+    # ascii art
+    disp_ascii()
+    # menu disp
     print("\n============================================\n\n [!] MENU\n\n [1] download manga\n [2] browse today's manga\n [99] quit\n\n============================================\n ")
     
     try:
@@ -116,16 +118,14 @@ while True:
         
         if choice == 2:
             print("\n [*] saved it in latest.txt\n")
-            break
         
         elif choice == 1:
             manga_name = input("\n [*] enter the name of the manga: ")
-            manga_name = manga_name.lower().replace(' ','-') # changes to slug notation of mangapanda
+            manga_name = manga_name.lower().replace(' ','-').replace(':','-').replace('--','-') # changes to slug notation of mangapanda
             mainn(manga_name)
         
         elif choice == 99:
             print("\n [!] exiting.....\n")
-            break
         
         else:
             print("\n [!] enter a goddamn proper choice")
