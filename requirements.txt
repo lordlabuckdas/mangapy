@@ -4,7 +4,7 @@ chardet==3.0.4
 html-parser==0.2
 idna==2.9
 img2pdf==0.3.4
-Pillow==8.1.1
+Pillow==8.2.0
 ply==3.11
 requests==2.23.0
 soupsieve==2.0
